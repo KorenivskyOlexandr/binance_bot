@@ -49,7 +49,7 @@ def main():
         second_bar = create_named_data(symbol, symbol_price[1])
 
         if data_comparison(first_bar, second_bar):
-            send_text = f"{first_bar}, {second_bar}"
+            send_text = f"{first_bar},\n {second_bar}"
             send_notification_message(send_text)
 
 
