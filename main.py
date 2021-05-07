@@ -19,7 +19,7 @@ class BarInfo():
         self.volume_fiat = Decimal(currency_info[7])
 
     def __str__(self):
-        return f"{self.symbol}, {self.open_price=}, {self.close_price=}, {self.volume_fiat=}"
+        return f"{self.symbol}, open price = {self.open_price}, close price =  {self.close_price}, volume {self.volume_fiat}"
 
 
 def create_named_data(symbol: str, bar_info: list) -> BarInfo:
