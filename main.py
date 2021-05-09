@@ -26,11 +26,19 @@ def create_named_data(symbol: str, bar_info: list) -> BarInfo:
     return BarInfo(symbol, bar_info[:8])
 
 
+def get_average_value_of_volume(symbol: str) -> Decimal:
+    ticker = client.get_ticker(symbol=symbol)
+    volume = ticker.get("quoteVolume")
+    return Decimal(volume) / Decimal(24)
+
+
 def data_comparison(first_bar: BarInfo, second_bar: BarInfo) -> bool:
-    if first_bar.volume_fiat > second_bar.volume_fiat:
-        if first_bar.open_price > first_bar.close_price:
-            if second_bar.close_price > first_bar.open_price:
-                return True
+    if second_bar.close_price < Decimal('500'):
+        if first_bar.volume_fiat > second_bar.volume_fiat:
+            if first_bar.open_price > first_bar.close_price and second_bar.close_price > second_bar.open_price:
+                if second_bar.close_price > first_bar.open_price:
+                    if first_bar.volume_fiat > get_average_value_of_volume(first_bar.symbol):
+                        return True
     return False
 
 
@@ -57,6 +65,7 @@ def test():
     symbol_price = client.get_klines(symbol="XRPBUSD", interval="5m", limit="3")
     first_bar = create_named_data("XRPBUSD", symbol_price[0])
     second_bar = create_named_data("XRPBUSD", symbol_price[1])
+    print(first_bar, second_bar)
     if data_comparison(first_bar, second_bar):
         print(first_bar, second_bar)
 
