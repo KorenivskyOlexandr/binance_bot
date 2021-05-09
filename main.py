@@ -50,6 +50,11 @@ def get_all_symbols_with_currency(currency: str = "BUSD") -> list:
     return result
 
 
+def create_binance_link(symbol: str) -> str:
+    link = f"https://www.binance.com/uk-UA/trade/{symbol[:len(symbol) - 4]}_{symbol[-4:]}?type=spot"
+    return link
+
+
 def main():
     for symbol in get_all_symbols_with_currency():
         symbol_price = client.get_klines(symbol=symbol, interval="1h", limit="3")
@@ -57,7 +62,7 @@ def main():
         second_bar = create_named_data(symbol, symbol_price[1])
 
         if data_comparison(first_bar, second_bar):
-            send_text = f"{first_bar},\n {second_bar}"
+            send_text = f"{first_bar},\n {second_bar}\n{create_binance_link(symbol)}"
             send_notification_message(send_text)
 
 
