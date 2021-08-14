@@ -173,10 +173,10 @@ def bot():
     if find_pattern(map_symbol_price):
         print("try to buy")
         buy_coins()
-        time.sleep(1.46)
-        print("sell after 1.5 m")
-        sell_coins()
-        print(f"bank after sell - {client.get_asset_balance(asset='USDT').get('free')}")
+        # time.sleep(1.46)
+        # print("sell after 1.5 m")
+        # sell_coins()
+        # print(f"bank after sell - {client.get_asset_balance(asset='USDT').get('free')}")
 
 
 if __name__ == "__main__":
